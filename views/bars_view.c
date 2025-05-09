@@ -66,22 +66,16 @@ void draw_bars_view(Canvas* canvas, void* ctx) {
         line++;
     }
 
-    if(app->data.vram_usage <= 100) {
+    if(app->data.gpu_temp <= 100) {
         if(app->lines_count) {
-            canvas_draw_str(canvas, 1, margin_top + line * spacing + 9, "VRAM");
-            snprintf(
-                str,
-                32,
-                "%.1f/%.1f %s",
-                (double)(app->data.vram_max * 0.1f * app->data.vram_usage * 0.01f),
-                (double)(app->data.vram_max * 0.1f),
-                app->data.vram_unit);
+            canvas_draw_str(canvas, 1, margin_top + line * spacing + 9, "TEMP");
+            snprintf(str, 32, "%d/%d %s", app->data.gpu_temp, app->data.gpu_max_temp, "°C");
             elements_progress_bar_with_text(
                 canvas,
                 BAR_X,
                 margin_top + line * spacing,
                 BAR_WIDTH,
-                app->data.vram_usage * 0.01f,
+                (double)app->data.gpu_temp / (double)app->data.gpu_max_temp,
                 str);
         }
 
